@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1037
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 112}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 16973
+  controlID: 1889
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 16974
+  controlID: 1890
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -1216,9 +1216,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0.5305376, y: 1.5562035, z: 0.12314187}
+    m_Target: {x: 5.153942, y: 1.8839043, z: 0.068402104}
     speed: 2
-    m_Value: {x: 0.5305376, y: 1.5562035, z: 0.12314187}
+    m_Value: {x: 5.153942, y: 1.8839043, z: 0.068402104}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1269,9 +1269,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.2343957
+    m_Target: 8.708334
     speed: 2
-    m_Value: 3.2343957
+    m_Value: 8.708334
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1328,8 +1328,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 79
-    width: 840
-    height: 477
+    width: 1141
+    height: 291
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1347,14 +1347,14 @@ MonoBehaviour:
     m_KeySerializationHelper:
     - {fileID: -7801779091047987262, guid: fe4c55d057909e34b8fc464f549dc73d, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.78152174
+    - e00: 0.25053802
       e01: 0
       e02: 0
-      e03: -7.815216
+      e03: 144.92938
       e10: 0
-      e11: 0.78152174
+      e11: 0.25053802
       e12: 0
-      e13: 55.27121
+      e13: 161.0769
       e20: 0
       e21: 0
       e22: 1
@@ -1420,17 +1420,14 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: []
+      m_SelectedIDs:
+      - m_Data: 81366
       m_LastClickedID:
-        m_Data: 0
+        m_Data: 81366
       m_ExpandedIDs:
-      - m_Data: -42372
-      - m_Data: -6994
-      - m_Data: -2088
-      - m_Data: -1382
-      - m_Data: 51534
-      - m_Data: 52136
-      - m_Data: 52224
+      - m_Data: -66824
+      - m_Data: -65968
+      - m_Data: -64712
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1527,16 +1524,8 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 51962
-    - m_Data: 52832
-    - m_Data: 52836
-    - m_Data: 52840
-    - m_Data: 52842
-    - m_Data: 52844
-    - m_Data: 52846
-    - m_Data: 52848
-    - m_Data: 52850
-    - m_Data: 57496
+    - m_Data: 70426
+    - m_Data: 77474
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1565,21 +1554,14 @@ MonoBehaviour:
       m_ResourceFile: 
   m_AssetTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: []
+    m_SelectedIDs:
+    - m_Data: 81366
     m_LastClickedID:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 51962
-    - m_Data: 52832
-    - m_Data: 52836
-    - m_Data: 52840
-    - m_Data: 52842
-    - m_Data: 52844
-    - m_Data: 52846
-    - m_Data: 52848
-    - m_Data: 52850
-    - m_Data: 57496
+    - m_Data: 70426
+    - m_Data: 77474
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1607,9 +1589,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
+    m_SelectedInstanceIDs:
+    - m_Data: 81366
     m_LastClickedEntityId:
-      m_Data: 0
+      m_Data: 81366
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: []
     m_RenameOverlay:
@@ -1688,7 +1671,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectEntityId:
     m_Data: 0
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 453
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
