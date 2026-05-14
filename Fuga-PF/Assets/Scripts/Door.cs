@@ -18,7 +18,7 @@ public class Door : MonoBehaviour
             {
                 if (MessageManager.instance != null)
                 {
-                    MessageManager.instance.ShowMessage("A porta está trancada. Encontre a chave.");
+                  MessageManager.instance.ShowMessage("A porta está trancada, destrua a caixa para pegar a chave!");
                 }
             }
         }

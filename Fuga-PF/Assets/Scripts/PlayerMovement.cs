@@ -11,10 +11,17 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Ataque")]
+    public Transform attackPoint;
+    public float attackRadius = 0.5f;
+    public LayerMask destructibleLayer;
+    public int attackDamage = 1;
+
     private Rigidbody2D rb;
     private Animator anim;
     private float moveInput;
     private bool isGrounded;
+    private bool facingRight = true;
 
     void Start()
     {
@@ -28,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
         CheckGround();
         Jump();
+        Attack();
         FlipCharacter();
         UpdateAnimations();
     }
@@ -54,23 +62,61 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+       if (Input.GetMouseButtonDown(0))
+        {
+            if (anim != null)
+            {
+                anim.SetTrigger("Knife");
+            }
+
+            Collider2D[] hitObjects = Physics2D.OverlapCircleAll(
+                attackPoint.position,
+                attackRadius,
+                destructibleLayer
+            );
+
+            foreach (Collider2D hit in hitObjects)
+            {
+                DestructibleCrate crate = hit.GetComponent<DestructibleCrate>();
+
+                if (crate != null)
+                {
+                    crate.TakeDamage(attackDamage);
+                }
+            }
+        }
+    }
+
     void FlipCharacter()
     {
-        if (moveInput > 0)
+        if (moveInput > 0 && !facingRight)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            Flip();
         }
-        else if (moveInput < 0)
+        else if (moveInput < 0 && facingRight)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            Flip();
         }
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
     void UpdateAnimations()
     {
+        if (anim == null) return;
+
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
         anim.SetBool("IsGrounded", isGrounded);
-        //anim.SetFloat("VerticalVelocity", rb.linearVelocity.y);
+        anim.SetFloat("VerticalVelocity", rb.linearVelocity.y);
     }
 
     void OnDrawGizmosSelected()
@@ -78,6 +124,11 @@ public class PlayerMovement : MonoBehaviour
         if (groundCheck != null)
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
+
+        if (attackPoint != null)
+        {
+            Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         }
     }
 }
