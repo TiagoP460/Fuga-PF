@@ -11,14 +11,20 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    [Header("Ataque")]
+    [Header("Ataque corpo a corpo")]
     public Transform attackPoint;
     public float attackRadius = 0.5f;
-    public LayerMask destructibleLayer;
+    public LayerMask attackLayer;
     public int attackDamage = 1;
+
+    [Header("Tiro")]
+    public Transform firePoint;
+    public GameObject bulletPrefab;
 
     private Rigidbody2D rb;
     private Animator anim;
+    private PlayerInventory inventory;
+
     private float moveInput;
     private bool isGrounded;
     private bool facingRight = true;
@@ -27,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        inventory = GetComponent<PlayerInventory>();
     }
 
     void Update()
@@ -36,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         CheckGround();
         Jump();
         Attack();
+        Shoot();
         FlipCharacter();
         UpdateAnimations();
     }
@@ -47,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckGround()
     {
+        if (groundCheck == null) return;
+
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
@@ -64,17 +74,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Attack()
     {
-       if (Input.GetMouseButtonDown(0))
+        // Botão esquerdo do mouse
+        if (Input.GetMouseButtonDown(0))
         {
             if (anim != null)
             {
                 anim.SetTrigger("Knife");
             }
 
+            if (attackPoint == null) return;
+
             Collider2D[] hitObjects = Physics2D.OverlapCircleAll(
                 attackPoint.position,
                 attackRadius,
-                destructibleLayer
+                attackLayer
             );
 
             foreach (Collider2D hit in hitObjects)
@@ -85,6 +98,55 @@ public class PlayerMovement : MonoBehaviour
                 {
                     crate.TakeDamage(attackDamage);
                 }
+
+               Health health = hit.GetComponent<Health>();
+
+                if (health != null && hit.CompareTag("Enemy"))
+            {
+                health.TakeDamage(attackDamage);
+            }
+            }
+        }
+    }
+
+    void Shoot()
+    {
+        // Botão direito do mouse
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inventory == null || !inventory.hasGun)
+            {
+                if (MessageManager.instance != null)
+                {
+                    MessageManager.instance.ShowMessage("Você ainda não tem uma arma.");
+                }
+
+                return;
+            }
+
+            if (bulletPrefab == null || firePoint == null)
+            {
+                Debug.LogWarning("FirePoint ou BulletPrefab não foi configurado no PlayerMovement.");
+                return;
+            }
+
+            if (anim != null)
+            {
+                anim.SetTrigger("Shoot");
+            }
+
+            GameObject bullet = Instantiate(
+                bulletPrefab,
+                firePoint.position,
+                Quaternion.identity
+            );
+
+            PlayerBullet bulletScript = bullet.GetComponent<PlayerBullet>();
+
+            if (bulletScript != null)
+            {
+                int direction = facingRight ? 1 : -1;
+                bulletScript.SetDirection(direction);
             }
         }
     }
@@ -116,7 +178,6 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
         anim.SetBool("IsGrounded", isGrounded);
-        anim.SetFloat("VerticalVelocity", rb.linearVelocity.y);
     }
 
     void OnDrawGizmosSelected()
