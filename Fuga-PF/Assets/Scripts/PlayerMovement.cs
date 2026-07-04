@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Tiro")]
     public Transform firePoint;
     public GameObject bulletPrefab;
+    public float shootCooldown = 0.6f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -28,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private float moveInput;
     private bool isGrounded;
     private bool facingRight = true;
+
+    private float nextShootTime = 0f;
 
     void Start()
     {
@@ -99,20 +102,20 @@ public class PlayerMovement : MonoBehaviour
                     crate.TakeDamage(attackDamage);
                 }
 
-               Health health = hit.GetComponent<Health>();
+                Health health = hit.GetComponent<Health>();
 
                 if (health != null && hit.CompareTag("Enemy"))
-            {
-                health.TakeDamage(attackDamage);
-            }
+                {
+                    health.TakeDamage(attackDamage);
+                }
             }
         }
     }
 
     void Shoot()
     {
-        // Botão direito do mouse
-        if (Input.GetMouseButtonDown(1))
+        // Botão direito do mouse + cooldown
+        if (Input.GetMouseButtonDown(1) && Time.time >= nextShootTime)
         {
             if (inventory == null || !inventory.hasGun)
             {
@@ -148,6 +151,8 @@ public class PlayerMovement : MonoBehaviour
                 int direction = facingRight ? 1 : -1;
                 bulletScript.SetDirection(direction);
             }
+
+            nextShootTime = Time.time + shootCooldown;
         }
     }
 
