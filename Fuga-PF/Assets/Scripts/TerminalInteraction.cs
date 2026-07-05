@@ -2,14 +2,6 @@ using UnityEngine;
 
 public class TerminalInteraction : MonoBehaviour
 {
-    public enum WireColor
-    {
-        Vermelho,
-        Azul,
-        Verde,
-        Amarelo
-    }
-
     [Header("Referências")]
     [SerializeField] private SecurityManager securityManager;
     [SerializeField] private GameObject minigameCanvas;
@@ -17,9 +9,6 @@ public class TerminalInteraction : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private Behaviour playerMovementScript;
-
-    [Header("Minigame")]
-    [SerializeField] private WireColor correctWire = WireColor.Azul;
 
     private bool playerNear = false;
     private bool minigameOpen = false;
@@ -40,7 +29,9 @@ public class TerminalInteraction : MonoBehaviour
     private void Start()
     {
         if (minigameCanvas != null)
+        {
             minigameCanvas.SetActive(false);
+        }
     }
 
     private void Update()
@@ -89,73 +80,71 @@ public class TerminalInteraction : MonoBehaviour
             return;
 
         playerNear = false;
+
+        if (!minigameOpen)
+        {
+            ShowMessage("");
+        }
     }
 
     private void OpenMinigame()
-{
-    minigameOpen = true;
+    {
+        minigameOpen = true;
 
-    if (MessageManager.instance != null)
-        MessageManager.instance.ShowMessage("");
+        ShowMessage("");
 
-    if (minigameCanvas != null)
-        minigameCanvas.SetActive(true);
+        if (minigameCanvas != null)
+        {
+            minigameCanvas.SetActive(true);
+        }
 
-    if (wireMinigameManager != null)
-        wireMinigameManager.ResetMinigame();
+        if (wireMinigameManager != null)
+        {
+            wireMinigameManager.ResetMinigame();
+        }
 
-    if (playerMovementScript != null)
-        playerMovementScript.enabled = false;
-}
+        if (playerMovementScript != null)
+        {
+            playerMovementScript.enabled = false;
+        }
+    }
+
     private void CloseMinigame()
     {
         minigameOpen = false;
 
         if (minigameCanvas != null)
+        {
             minigameCanvas.SetActive(false);
+        }
 
         if (playerMovementScript != null)
+        {
             playerMovementScript.enabled = true;
+        }
     }
 
-    public void CutRedWire()
+    public void ResolveWireMinigame(bool success)
     {
-        CutWire(WireColor.Vermelho);
-    }
-
-    public void CutBlueWire()
-    {
-        CutWire(WireColor.Azul);
-    }
-
-    public void CutGreenWire()
-    {
-        CutWire(WireColor.Verde);
-    }
-
-    public void CutYellowWire()
-    {
-        CutWire(WireColor.Amarelo);
-    }
-
-    private void CutWire(WireColor selectedWire)
-    {
-        if (!minigameOpen)
-            return;
-
         CloseMinigame();
 
-        if (selectedWire == correctWire)
+        if (success)
         {
             if (securityManager != null)
+            {
                 securityManager.DisableSecurity();
+            }
 
             ShowMessage("Sistema de segurança desativado. Volte para a escada.");
         }
         else
         {
+            ShowMessage("");
+
             if (securityManager != null)
+            {
                 securityManager.TriggerSecurityFail();
+            }
         }
     }
 

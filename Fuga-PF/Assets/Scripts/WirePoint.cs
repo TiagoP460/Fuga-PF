@@ -17,6 +17,7 @@ public class WirePoint : MonoBehaviour, IPointerClickHandler
         Direita
     }
 
+    [Header("Configuração do Ponto")]
     [SerializeField] private WireColor wireColor;
     [SerializeField] private WireSide wireSide;
 

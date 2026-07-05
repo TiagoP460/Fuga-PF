@@ -5,30 +5,36 @@ using UnityEngine.UI;
 public class WireMinigameManager : MonoBehaviour
 {
     [Header("Referências")]
-    [SerializeField] private SecurityManager securityManager;
     [SerializeField] private TerminalInteraction terminalInteraction;
     [SerializeField] private RectTransform linesContainer;
     [SerializeField] private Image linePrefab;
     [SerializeField] private WirePoint[] wirePoints;
 
-    [Header("Visual")]
+    [Header("Visual da Linha")]
     [SerializeField] private float lineThickness = 12f;
 
     private WirePoint firstPoint;
     private int totalConnections = 0;
-    private readonly List<Image> createdLines = new();
+
+    private List<Image> createdLines = new List<Image>();
 
     private void Awake()
     {
-        if (securityManager == null)
-            securityManager = FindAnyObjectByType<SecurityManager>();
+        ConfigurePoints();
+    }
 
+    private void OnEnable()
+    {
+        ConfigurePoints();
+    }
+
+    private void ConfigurePoints()
+    {
         foreach (WirePoint point in wirePoints)
         {
             if (point != null)
             {
                 point.manager = this;
-                point.connected = false;
             }
         }
     }
@@ -41,7 +47,9 @@ public class WireMinigameManager : MonoBehaviour
         foreach (Image line in createdLines)
         {
             if (line != null)
+            {
                 Destroy(line.gameObject);
+            }
         }
 
         createdLines.Clear();
@@ -49,40 +57,48 @@ public class WireMinigameManager : MonoBehaviour
         foreach (WirePoint point in wirePoints)
         {
             if (point != null)
+            {
                 point.connected = false;
+                point.manager = this;
+            }
         }
     }
 
     public void SelectPoint(WirePoint point)
     {
-        if (point == null || point.connected)
+        if (point == null)
             return;
 
-        // Primeiro clique: só aceita pontos da esquerda
+        if (point.connected)
+            return;
+
         if (firstPoint == null)
         {
             if (point.Side != WirePoint.WireSide.Esquerda)
                 return;
 
             firstPoint = point;
+            Debug.Log("Primeiro ponto escolhido: " + point.ColorType);
             return;
         }
 
-        // Clicou no mesmo ponto: cancela a seleção
         if (point == firstPoint)
         {
             firstPoint = null;
+            Debug.Log("Seleção cancelada.");
             return;
         }
 
-        // Segundo clique: só aceita pontos da direita
         if (point.Side != WirePoint.WireSide.Direita)
             return;
 
-        // Verifica se a cor bate
         if (point.ColorType == firstPoint.ColorType)
         {
-            CreateLine(firstPoint.RectTransform, point.RectTransform, GetUnityColor(point.ColorType));
+            CreateLine(
+                firstPoint.RectTransform,
+                point.RectTransform,
+                GetColor(point.ColorType)
+            );
 
             firstPoint.connected = true;
             point.connected = true;
@@ -90,64 +106,72 @@ public class WireMinigameManager : MonoBehaviour
             totalConnections++;
             firstPoint = null;
 
+            Debug.Log("Conexão correta. Total: " + totalConnections);
+
             if (totalConnections >= 4)
             {
-                Success();
+                CompleteMinigame();
             }
         }
         else
         {
-            Fail();
+            FailMinigame();
         }
     }
 
-    private void Success()
+    private void CompleteMinigame()
     {
+        Debug.Log("Minigame concluído.");
+
         if (terminalInteraction != null)
         {
             terminalInteraction.ResolveWireMinigame(true);
         }
-        else if (securityManager != null)
-        {
-            securityManager.DisableSecurity();
-        }
     }
 
-    private void Fail()
+    private void FailMinigame()
     {
+        Debug.Log("Ligação errada. Game Over.");
+
         if (terminalInteraction != null)
         {
             terminalInteraction.ResolveWireMinigame(false);
-        }
-        else if (securityManager != null)
-        {
-            securityManager.TriggerSecurityFail();
         }
     }
 
     private void CreateLine(RectTransform start, RectTransform end, Color color)
     {
-        if (linePrefab == null || linesContainer == null)
+        if (linePrefab == null)
+        {
+            Debug.LogWarning("Line Prefab não foi configurado.");
             return;
+        }
+
+        if (linesContainer == null)
+        {
+            Debug.LogWarning("Lines Container não foi configurado.");
+            return;
+        }
 
         Image line = Instantiate(linePrefab, linesContainer);
         line.gameObject.SetActive(true);
         line.color = color;
+        line.raycastTarget = false;
 
         RectTransform lineRect = line.rectTransform;
 
-        Vector2 startPos = GetLocalPoint(linesContainer, start);
-        Vector2 endPos = GetLocalPoint(linesContainer, end);
+        Vector2 startPos = GetLocalPosition(linesContainer, start);
+        Vector2 endPos = GetLocalPosition(linesContainer, end);
 
         Vector2 direction = endPos - startPos;
-        float length = direction.magnitude;
+        float distance = direction.magnitude;
 
         lineRect.anchorMin = new Vector2(0.5f, 0.5f);
         lineRect.anchorMax = new Vector2(0.5f, 0.5f);
         lineRect.pivot = new Vector2(0.5f, 0.5f);
 
-        lineRect.sizeDelta = new Vector2(length, lineThickness);
         lineRect.anchoredPosition = (startPos + endPos) / 2f;
+        lineRect.sizeDelta = new Vector2(distance, lineThickness);
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         lineRect.localRotation = Quaternion.Euler(0f, 0f, angle);
@@ -155,22 +179,32 @@ public class WireMinigameManager : MonoBehaviour
         createdLines.Add(line);
     }
 
-    private Vector2 GetLocalPoint(RectTransform container, RectTransform target)
+    private Vector2 GetLocalPosition(RectTransform container, RectTransform target)
     {
-        Vector3 worldPoint = target.TransformPoint(target.rect.center);
-        Vector3 localPoint = container.InverseTransformPoint(worldPoint);
-        return new Vector2(localPoint.x, localPoint.y);
+        Vector3 worldPosition = target.TransformPoint(target.rect.center);
+        Vector3 localPosition = container.InverseTransformPoint(worldPosition);
+
+        return new Vector2(localPosition.x, localPosition.y);
     }
 
-    private Color GetUnityColor(WirePoint.WireColor color)
+    private Color GetColor(WirePoint.WireColor color)
     {
-        return color switch
+        switch (color)
         {
-            WirePoint.WireColor.Vermelho => new Color(1f, 0.2f, 0.2f),
-            WirePoint.WireColor.Azul => new Color(0.15f, 0.6f, 1f),
-            WirePoint.WireColor.Verde => new Color(0.2f, 0.8f, 0.3f),
-            WirePoint.WireColor.Amarelo => new Color(1f, 0.9f, 0.15f),
-            _ => Color.white
-        };
+            case WirePoint.WireColor.Vermelho:
+                return new Color(1f, 0.1f, 0.1f);
+
+            case WirePoint.WireColor.Azul:
+                return new Color(0.1f, 0.55f, 1f);
+
+            case WirePoint.WireColor.Verde:
+                return new Color(0.1f, 0.8f, 0.25f);
+
+            case WirePoint.WireColor.Amarelo:
+                return new Color(1f, 0.9f, 0.05f);
+
+            default:
+                return Color.white;
+        }
     }
 }
