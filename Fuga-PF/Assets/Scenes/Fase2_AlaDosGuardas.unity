@@ -1562,7 +1562,7 @@ MonoBehaviour:
   attackRange: 2
   damage: 1
   attackCooldown: 1
-  chaseRange: 8
+  chaseRange: 7
   speed: 3
 --- !u!114 &485182605
 MonoBehaviour:
@@ -2925,7 +2925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1087545674}
   destroyOnDeath: 0
   dropItem: {fileID: 0}
 --- !u!114 &1327900793

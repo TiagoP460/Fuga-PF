@@ -7,8 +7,8 @@ public class RockProjectile : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private float lifeTime = 5f;
 
-    private Vector2 direction;
     private Rigidbody2D rb;
+    private bool launched = false;
 
     private void Awake()
     {
@@ -22,7 +22,9 @@ public class RockProjectile : MonoBehaviour
 
     public void Launch(Vector2 shootDirection)
     {
-        direction = shootDirection.normalized;
+        Vector2 direction = shootDirection.normalized;
+
+        launched = true;
 
         if (rb != null)
         {
@@ -49,6 +51,12 @@ public class RockProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!launched)
+            return;
+
+        if (collision.CompareTag("Enemy"))
+            return;
+
         if (collision.CompareTag("Player"))
         {
             Health playerHealth = collision.GetComponent<Health>();
@@ -62,7 +70,7 @@ public class RockProjectile : MonoBehaviour
             return;
         }
 
-        if (!collision.CompareTag("Enemy") && !collision.isTrigger)
+        if (!collision.isTrigger)
         {
             Destroy(gameObject);
         }

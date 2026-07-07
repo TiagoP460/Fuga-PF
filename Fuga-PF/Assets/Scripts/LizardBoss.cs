@@ -17,7 +17,6 @@ public class LizardBoss : MonoBehaviour
     [SerializeField] private GameObject rockPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private float attackCooldown = 1.5f;
-    [SerializeField] private float rockShootForce = 8f;
 
     [Header("Animação")]
     [SerializeField] private Animator animator;
@@ -120,6 +119,9 @@ public class LizardBoss : MonoBehaviour
         if (!playerIsInFront)
             return false;
 
+        if (throwPoint == null)
+            return false;
+
         RaycastHit2D hit = Physics2D.Raycast(
             throwPoint.position,
             directionToPlayer.normalized,
@@ -142,18 +144,42 @@ public class LizardBoss : MonoBehaviour
 
         attackTimer = attackCooldown;
 
+        StopMoving();
+
         if (animator != null)
         {
             animator.SetTrigger("Throw");
         }
+        else
+        {
+            ThrowRock();
+        }
+    }
 
+    public void ThrowRockFromAnimation()
+    {
         ThrowRock();
     }
 
     private void ThrowRock()
     {
-        if (rockPrefab == null || throwPoint == null || player == null)
+        if (rockPrefab == null)
+        {
+            Debug.LogWarning("Rock Prefab não está configurado no LizardBoss.");
             return;
+        }
+
+        if (throwPoint == null)
+        {
+            Debug.LogWarning("Throw Point não está configurado no LizardBoss.");
+            return;
+        }
+
+        if (player == null)
+        {
+            Debug.LogWarning("Player não encontrado.");
+            return;
+        }
 
         GameObject rock = Instantiate(
             rockPrefab,
@@ -161,12 +187,24 @@ public class LizardBoss : MonoBehaviour
             Quaternion.identity
         );
 
+        SpriteRenderer rockRenderer = rock.GetComponent<SpriteRenderer>();
+
+        if (rockRenderer != null)
+        {
+            rockRenderer.sortingLayerName = "Default";
+            rockRenderer.sortingOrder = 20;
+        }
+
         RockProjectile rockProjectile = rock.GetComponent<RockProjectile>();
 
         if (rockProjectile != null)
         {
             Vector2 direction = player.position - throwPoint.position;
             rockProjectile.Launch(direction);
+        }
+        else
+        {
+            Debug.LogWarning("O prefab da pedra não tem o script RockProjectile.");
         }
     }
 
