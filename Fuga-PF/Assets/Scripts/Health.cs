@@ -11,10 +11,19 @@ public class Health : MonoBehaviour
     [Header("Barra de vida")]
     public HealthBar healthBar;
 
+    [Header("Animações")]
+    public bool useDamageAnimation = true;
+    public string damageTriggerName = "Damage";
+    public string deathTriggerName = "Die";
+
     [Header("Morte")]
     public bool destroyOnDeath = true;
     public GameObject dropItem;
-    public float deathDelay = 0.8f;
+    public float deathDelay = 1.2f;
+
+    [Header("Congelar ao morrer")]
+    public bool freezeOnDeath = true;
+    public bool disableColliderOnDeath = true;
 
     [Header("Reiniciar Cena ao Morrer")]
     public bool restartSceneOnDeath = false;
@@ -54,6 +63,21 @@ public class Health : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            PlayDamageAnimation();
+        }
+    }
+
+    private void PlayDamageAnimation()
+    {
+        if (!useDamageAnimation) return;
+        if (anim == null) return;
+
+        if (HasAnimatorParameter(damageTriggerName, AnimatorControllerParameterType.Trigger))
+        {
+            anim.SetTrigger(damageTriggerName);
+        }
     }
 
     private void Die()
@@ -73,12 +97,13 @@ public class Health : MonoBehaviour
         {
             playerMovement.SetDead();
         }
-        else if (anim != null)
+        else
         {
-            anim.SetTrigger("Die");
+            PlayDeathAnimation();
         }
 
-        FreezePlayer();
+        DisableEnemyAI();
+        FreezeObject();
 
         if (restartSceneOnDeath)
         {
@@ -89,23 +114,69 @@ public class Health : MonoBehaviour
         StartCoroutine(DeathRoutine());
     }
 
-    private void FreezePlayer()
+    private void PlayDeathAnimation()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (anim == null) return;
 
-        if (rb != null)
+        if (HasAnimatorParameter("Walking", AnimatorControllerParameterType.Bool))
         {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-            rb.gravityScale = 0f;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            anim.SetBool("Walking", false);
         }
 
-        Collider2D col = GetComponent<Collider2D>();
-
-        if (col != null)
+        if (HasAnimatorParameter("PlayerDetected", AnimatorControllerParameterType.Bool))
         {
-            col.enabled = false;
+            anim.SetBool("PlayerDetected", false);
+        }
+
+        if (HasAnimatorParameter("Throw", AnimatorControllerParameterType.Trigger))
+        {
+            anim.ResetTrigger("Throw");
+        }
+
+        if (HasAnimatorParameter("Damage", AnimatorControllerParameterType.Trigger))
+        {
+            anim.ResetTrigger("Damage");
+        }
+
+        if (HasAnimatorParameter(deathTriggerName, AnimatorControllerParameterType.Trigger))
+        {
+            anim.SetTrigger(deathTriggerName);
+        }
+    }
+
+    private void DisableEnemyAI()
+    {
+        LizardBoss lizardBoss = GetComponent<LizardBoss>();
+
+        if (lizardBoss != null)
+        {
+            lizardBoss.enabled = false;
+        }
+    }
+
+    private void FreezeObject()
+    {
+        if (freezeOnDeath)
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+                rb.gravityScale = 0f;
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+        }
+
+        if (disableColliderOnDeath)
+        {
+            Collider2D col = GetComponent<Collider2D>();
+
+            if (col != null)
+            {
+                col.enabled = false;
+            }
         }
     }
 
@@ -131,5 +202,20 @@ public class Health : MonoBehaviour
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+    }
+
+    private bool HasAnimatorParameter(string parameterName, AnimatorControllerParameterType type)
+    {
+        if (anim == null) return false;
+
+        foreach (AnimatorControllerParameter parameter in anim.parameters)
+        {
+            if (parameter.name == parameterName && parameter.type == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

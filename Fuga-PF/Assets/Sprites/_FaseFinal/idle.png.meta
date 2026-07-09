@@ -1,25 +1,28 @@
 fileFormatVersion: 2
-guid: c7f176c081db15048bf74b1d9c0f4811
+guid: 309dee50e6f72aa4b87f50ff41d4ed44
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1188023349147584547
-    second: _parado-removebg-preview_0
+      213: -4496328120548652259
+    second: LizardIdle_6frames_288x288_transparent_0
   - first:
-      213: 2084423654760718648
-    second: _parado-removebg-preview_1
+      213: 1077988518205920245
+    second: LizardIdle_6frames_288x288_transparent_1
   - first:
-      213: 6590593779529816595
-    second: _parado-removebg-preview_2
+      213: 8646892859207142268
+    second: LizardIdle_6frames_288x288_transparent_2
   - first:
-      213: -1116434654699248140
-    second: _parado-removebg-preview_3
+      213: 134078491811578431
+    second: LizardIdle_6frames_288x288_transparent_3
   - first:
-      213: 5262295106605651488
-    second: _parado-removebg-preview_4
+      213: 2209296335987707663
+    second: LizardIdle_6frames_288x288_transparent_4
   - first:
-      213: -6425792531110480757
-    second: _parado-removebg-preview_5
+      213: -7229247649129879903
+    second: LizardIdle_6frames_288x288_transparent_5
+  - first:
+      213: -5464428937770192407
+    second: LizardIdle_6frames_288x288_transparent_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +55,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -66,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,7 +93,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +118,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _parado-removebg-preview_0
+      name: LizardIdle_6frames_288x288_transparent_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 80
+        x: 83
+        y: 15
         width: 121
-        height: 123
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +133,64 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 328cfce01f4bc7010800000000000000
-      internalID: 1188023349147584547
+      spriteID: d1b091d9565d991c0800000000000000
+      internalID: -4496328120548652259
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _parado-removebg-preview_1
+      name: LizardIdle_6frames_288x288_transparent_1
       rect:
         serializedVersion: 2
-        x: 150
-        y: 79
+        x: 370
+        y: 15
+        width: 123
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f31d9b88d8c5fe00800000000000000
+      internalID: 1077988518205920245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardIdle_6frames_288x288_transparent_2
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 15
+        width: 123
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b47e30e3feff770800000000000000
+      internalID: 8646892859207142268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardIdle_6frames_288x288_transparent_3
+      rect:
+        serializedVersion: 2
+        x: 947
+        y: 15
         width: 121
-        height: 125
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,86 +199,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8312f6f254c5dec10800000000000000
-      internalID: 2084423654760718648
+      spriteID: f32037c8da75cd100800000000000000
+      internalID: 134078491811578431
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _parado-removebg-preview_2
+      name: LizardIdle_6frames_288x288_transparent_4
       rect:
         serializedVersion: 2
-        x: 295
-        y: 79
-        width: 119
-        height: 124
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 31a16cfbf1e767b50800000000000000
-      internalID: 6590593779529816595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _parado-removebg-preview_3
-      rect:
-        serializedVersion: 2
-        x: 435
-        y: 79
-        width: 119
-        height: 124
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4f527bfb890a180f0800000000000000
-      internalID: -1116434654699248140
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _parado-removebg-preview_4
-      rect:
-        serializedVersion: 2
-        x: 577
-        y: 79
-        width: 120
-        height: 124
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0269184c48d670940800000000000000
-      internalID: 5262295106605651488
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _parado-removebg-preview_5
-      rect:
-        serializedVersion: 2
-        x: 715
-        y: 79
+        x: 1222
+        y: 15
         width: 121
-        height: 124
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +221,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b843dcefcbff2d6a0800000000000000
-      internalID: -6425792531110480757
+      spriteID: f0f8e1eef4ff8ae10800000000000000
+      internalID: 2209296335987707663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardIdle_6frames_288x288_transparent_6
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 15
+        width: 116
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e1b7d735d27a24b0800000000000000
+      internalID: -5464428937770192407
       vertices: []
       indices: 
       edges: []
@@ -250,7 +253,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f998d2c2118172b44a16febfd93937a9
+    spriteID: d4ef4247a042f5b41a4254ea76e009c2
     internalID: 0
     vertices: []
     indices: 
@@ -260,12 +263,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      _parado-removebg-preview_0: 1188023349147584547
-      _parado-removebg-preview_1: 2084423654760718648
-      _parado-removebg-preview_2: 6590593779529816595
-      _parado-removebg-preview_3: -1116434654699248140
-      _parado-removebg-preview_4: 5262295106605651488
-      _parado-removebg-preview_5: -6425792531110480757
+      LizardIdle_6frames_288x288_transparent_0: -4496328120548652259
+      LizardIdle_6frames_288x288_transparent_1: 1077988518205920245
+      LizardIdle_6frames_288x288_transparent_2: 8646892859207142268
+      LizardIdle_6frames_288x288_transparent_3: 134078491811578431
+      LizardIdle_6frames_288x288_transparent_4: 2209296335987707663
+      LizardIdle_6frames_288x288_transparent_5: -7229247649129879903
+      LizardIdle_6frames_288x288_transparent_6: -5464428937770192407
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

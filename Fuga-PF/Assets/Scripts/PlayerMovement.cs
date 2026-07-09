@@ -23,9 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bulletPrefab;
     public float shootCooldown = 0.6f;
 
+    [Header("Som")]
+    public AudioClip shootSound;
+    [Range(0f, 1f)] public float shootVolume = 1f;
+
     private Rigidbody2D rb;
     private Animator anim;
     private PlayerInventory inventory;
+    private AudioSource audioSource;
 
     private float moveInput;
     private bool isGrounded;
@@ -39,6 +44,14 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         inventory = GetComponent<PlayerInventory>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -180,6 +193,8 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("Shoot");
             }
 
+            PlayShootSound();
+
             GameObject bullet = Instantiate(
                 bulletPrefab,
                 firePoint.position,
@@ -195,6 +210,14 @@ public class PlayerMovement : MonoBehaviour
             }
 
             nextShootTime = Time.time + shootCooldown;
+        }
+    }
+
+    void PlayShootSound()
+    {
+        if (audioSource != null && shootSound != null)
+        {
+            audioSource.PlayOneShot(shootSound, shootVolume);
         }
     }
 

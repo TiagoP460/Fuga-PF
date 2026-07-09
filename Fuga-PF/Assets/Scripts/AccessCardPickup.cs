@@ -4,21 +4,23 @@ public class AccessCardPickup : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player"))
+            return;
+
+        PlayerInventory inventory = collision.GetComponent<PlayerInventory>();
+
+        if (inventory != null)
         {
-            PlayerInventory inventory = collision.GetComponent<PlayerInventory>();
-
-            if (inventory != null)
-            {
-                inventory.hasAccessCard = true;
-
-                if (MessageManager.instance != null)
-                {
-                    MessageManager.instance.ShowMessage("Cartão de acesso coletado!");
-                }
-
-                Destroy(gameObject);
-            }
+            inventory.hasAccessCard = true;
         }
+
+        PickupSound pickupSound = GetComponent<PickupSound>();
+
+        if (pickupSound != null)
+        {
+            pickupSound.PlayPickupSound();
+        }
+
+        Destroy(gameObject);
     }
 }

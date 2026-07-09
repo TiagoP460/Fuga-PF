@@ -944,6 +944,7 @@ GameObject:
   - component: {fileID: 451081941}
   - component: {fileID: 451081940}
   - component: {fileID: 451081947}
+  - component: {fileID: 451081948}
   m_Layer: 0
   m_Name: LizardBoss
   m_TagString: Enemy
@@ -966,9 +967,14 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 927079084}
+  useDamageAnimation: 1
+  damageTriggerName: Damage
+  deathTriggerName: Die
   destroyOnDeath: 1
   dropItem: {fileID: 0}
   deathDelay: 0.8
+  freezeOnDeath: 1
+  disableColliderOnDeath: 1
   restartSceneOnDeath: 0
   restartDelay: 1
 --- !u!114 &451081941
@@ -994,7 +1000,7 @@ MonoBehaviour:
     m_Bits: 0
   rockPrefab: {fileID: 8523218307913010127, guid: edcb7e2df5b87254faf6605b3e786a1a, type: 3}
   throwPoint: {fileID: 1118069960}
-  attackCooldown: 1.1
+  attackCooldown: 1.2
   animator: {fileID: 451081944}
 --- !u!50 &451081943
 Rigidbody2D:
@@ -1099,10 +1105,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.21, y: 1.23}
+  m_Size: {x: 0.9727273, y: 1.0818182}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &451081946
 Transform:
@@ -1158,14 +1164,27 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.21, y: 1.23}
-    newSize: {x: 1.21, y: 1.23}
+    oldSize: {x: 0.9727273, y: 1.0818182}
+    newSize: {x: 0.9727273, y: 1.0818182}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1.21, y: 1.23}
   m_EdgeRadius: 0
+--- !u!114 &451081948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451081939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8644117d5f53bf340b471aedb50cdc74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LizardAnimationEvents
+  lizardBoss: {fileID: 451081941}
 --- !u!1 &483308884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,9 +2556,14 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 0
   healthBar: {fileID: 1054343657}
+  useDamageAnimation: 1
+  damageTriggerName: Damage
+  deathTriggerName: Die
   destroyOnDeath: 0
   dropItem: {fileID: 0}
   deathDelay: 0.8
+  freezeOnDeath: 1
+  disableColliderOnDeath: 1
   restartSceneOnDeath: 1
   restartDelay: 1
 --- !u!114 &1671708986
@@ -2585,6 +2609,8 @@ MonoBehaviour:
   firePoint: {fileID: 1068472929}
   bulletPrefab: {fileID: 4695008049276178596, guid: 8759e4348feb6414d8c2a4df3226a86e, type: 3}
   shootCooldown: 0.9
+  shootSound: {fileID: 8300000, guid: de0a422e6f1180b48bc8d85071fd5a1b, type: 3}
+  shootVolume: 0.4
 --- !u!95 &1671708988
 Animator:
   serializedVersion: 7

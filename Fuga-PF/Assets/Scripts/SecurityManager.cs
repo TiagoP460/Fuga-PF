@@ -1,15 +1,19 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SecurityManager : MonoBehaviour
 {
     public static SecurityManager instance;
 
     [Header("Estado da Segurança")]
-    public bool securityDisabled = false;
+    [SerializeField] private bool securityDisabled = false;
 
-    public bool IsSecurityDisabled => securityDisabled;
+    public bool IsSecurityDisabled
+    {
+        get { return securityDisabled; }
+    }
 
     [Header("Alarme")]
     [SerializeField] private AudioSource alarmAudio;
@@ -18,12 +22,31 @@ public class SecurityManager : MonoBehaviour
     [SerializeField] private GameObject darkPanel;
     [SerializeField] private CanvasGroup darkCanvasGroup;
     [SerializeField] private float fadeDuration = 3f;
+    [SerializeField] private float finalDarkAlpha = 0.85f;
 
-    [Header("Game Over")]
-    [SerializeField] private GameObject gameOverCanvas;
-    [SerializeField] private string firstSceneName = "Fase1";
+    [Header("Luz Vermelha Piscando")]
+    [SerializeField] private GameObject redFlashPanel;
+    [SerializeField] private CanvasGroup redFlashCanvasGroup;
+    [SerializeField] private float redFlashSpeed = 8f;
+    [SerializeField] private float redFlashMaxAlpha = 0.45f;
 
-    private bool gameOverStarted = false;
+    [Header("Tela Você Foi Pego")]
+    [SerializeField] private GameObject caughtPanel;
+    [SerializeField] private TextMeshProUGUI caughtText;
+    [SerializeField] private GameObject returnMenuButton;
+
+    [Header("Player")]
+    [SerializeField] private GameObject playerObject;
+
+    [Header("Menu Inicial")]
+    [SerializeField] private string mainMenuSceneName = "MenuInicial";
+
+    private Behaviour playerMovementScript;
+    private Rigidbody2D playerRb;
+    private Collider2D playerCollider;
+
+    private bool alarmStarted = false;
+    private Coroutine redFlashCoroutine;
 
     private void Awake()
     {
@@ -33,56 +56,121 @@ public class SecurityManager : MonoBehaviour
     private void Start()
     {
         securityDisabled = false;
-        gameOverStarted = false;
+        alarmStarted = false;
 
-        if (alarmAudio != null)
-            alarmAudio.Stop();
-
-        if (darkCanvasGroup != null)
-            darkCanvasGroup.alpha = 0f;
-
-        if (darkPanel != null)
-            darkPanel.SetActive(false);
-
-        if (gameOverCanvas != null)
-            gameOverCanvas.SetActive(false);
+        FindPlayerIfNeeded();
+        SetupUI();
 
         Time.timeScale = 1f;
     }
 
+    private void FindPlayerIfNeeded()
+    {
+        if (playerObject == null)
+        {
+            GameObject foundPlayer = GameObject.FindGameObjectWithTag("Player");
+
+            if (foundPlayer != null)
+            {
+                playerObject = foundPlayer;
+            }
+        }
+
+        if (playerObject != null)
+        {
+            playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+            playerRb = playerObject.GetComponent<Rigidbody2D>();
+            playerCollider = playerObject.GetComponent<Collider2D>();
+        }
+    }
+
+    private void SetupUI()
+    {
+        if (darkPanel != null)
+        {
+            darkPanel.SetActive(true);
+        }
+
+        if (darkCanvasGroup != null)
+        {
+            darkCanvasGroup.alpha = 0f;
+            darkCanvasGroup.interactable = false;
+            darkCanvasGroup.blocksRaycasts = false;
+        }
+
+        if (redFlashPanel != null)
+        {
+            redFlashPanel.SetActive(true);
+        }
+
+        if (redFlashCanvasGroup != null)
+        {
+            redFlashCanvasGroup.alpha = 0f;
+            redFlashCanvasGroup.interactable = false;
+            redFlashCanvasGroup.blocksRaycasts = false;
+        }
+
+        if (caughtPanel != null)
+        {
+            caughtPanel.SetActive(false);
+        }
+
+        if (caughtText != null)
+        {
+            caughtText.text = "Você foi pego";
+        }
+
+        if (returnMenuButton != null)
+        {
+            returnMenuButton.SetActive(false);
+        }
+    }
+
     public void DisableSecurity()
     {
-        if (gameOverStarted)
-            return;
-
         securityDisabled = true;
-
-        Debug.Log("Sistema de segurança desativado.");
     }
 
     public void TriggerSecurityFail()
     {
-        if (gameOverStarted)
-            return;
-
-        if (securityDisabled)
-            return;
-
-        StartCoroutine(GameOverRoutine());
+        TriggerAlarm();
     }
 
-    private IEnumerator GameOverRoutine()
+    public void TriggerAlarm()
     {
-        gameOverStarted = true;
+        if (alarmStarted) return;
+
+        alarmStarted = true;
+        StartCoroutine(SecurityFailRoutine());
+    }
+
+    private IEnumerator SecurityFailRoutine()
+    {
+        FreezePlayer();
 
         if (alarmAudio != null)
+        {
             alarmAudio.Play();
+        }
+
+        if (redFlashCoroutine != null)
+        {
+            StopCoroutine(redFlashCoroutine);
+        }
+
+        redFlashCoroutine = StartCoroutine(RedFlashRoutine());
 
         if (darkPanel != null)
+        {
             darkPanel.SetActive(true);
+        }
 
         if (darkCanvasGroup != null)
+        {
             darkCanvasGroup.alpha = 0f;
+            darkCanvasGroup.interactable = false;
+            darkCanvasGroup.blocksRaycasts = false;
+        }
 
         float timer = 0f;
 
@@ -94,7 +182,7 @@ public class SecurityManager : MonoBehaviour
             {
                 darkCanvasGroup.alpha = Mathf.Lerp(
                     0f,
-                    1f,
+                    finalDarkAlpha,
                     timer / fadeDuration
                 );
             }
@@ -103,17 +191,93 @@ public class SecurityManager : MonoBehaviour
         }
 
         if (darkCanvasGroup != null)
-            darkCanvasGroup.alpha = 1f;
+        {
+            darkCanvasGroup.alpha = finalDarkAlpha;
+            darkCanvasGroup.interactable = true;
+            darkCanvasGroup.blocksRaycasts = true;
+        }
 
-        if (gameOverCanvas != null)
-            gameOverCanvas.SetActive(true);
-
-        Time.timeScale = 0f;
+        ShowCaughtScreen();
     }
 
-    public void RestartFromFirstPhase()
+    private IEnumerator RedFlashRoutine()
+    {
+        if (redFlashPanel != null)
+        {
+            redFlashPanel.SetActive(true);
+        }
+
+        while (alarmStarted)
+        {
+            float alpha = Mathf.PingPong(
+                Time.unscaledTime * redFlashSpeed,
+                redFlashMaxAlpha
+            );
+
+            if (redFlashCanvasGroup != null)
+            {
+                redFlashCanvasGroup.alpha = alpha;
+            }
+
+            yield return null;
+        }
+
+        if (redFlashCanvasGroup != null)
+        {
+            redFlashCanvasGroup.alpha = 0f;
+        }
+    }
+
+    private void ShowCaughtScreen()
+    {
+        if (caughtPanel != null)
+        {
+            caughtPanel.SetActive(true);
+        }
+
+        if (caughtText != null)
+        {
+            caughtText.text = "Você foi pego";
+        }
+
+        if (returnMenuButton != null)
+        {
+            returnMenuButton.SetActive(true);
+        }
+    }
+
+    private void FreezePlayer()
+    {
+        if (playerMovementScript != null)
+        {
+            playerMovementScript.enabled = false;
+        }
+
+        if (playerRb != null)
+        {
+            playerRb.linearVelocity = Vector2.zero;
+            playerRb.angularVelocity = 0f;
+            playerRb.gravityScale = 0f;
+            playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = false;
+        }
+    }
+
+    public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(firstSceneName);
+
+        alarmStarted = false;
+
+        if (alarmAudio != null)
+        {
+            alarmAudio.Stop();
+        }
+
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 }

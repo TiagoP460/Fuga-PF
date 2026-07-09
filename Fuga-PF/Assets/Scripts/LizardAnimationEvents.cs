@@ -8,15 +8,26 @@ public class LizardAnimationEvents : MonoBehaviour
     {
         if (lizardBoss == null)
         {
-            lizardBoss = GetComponentInParent<LizardBoss>();
+            lizardBoss = GetComponent<LizardBoss>();
+
+            if (lizardBoss == null)
+            {
+                lizardBoss = GetComponentInParent<LizardBoss>();
+            }
         }
     }
 
     public void ThrowRockFromAnimation()
     {
+        Debug.Log("EVENTO DA PEDRA CHAMADO");
+
         if (lizardBoss != null)
         {
             lizardBoss.ThrowRockFromAnimation();
+        }
+        else
+        {
+            Debug.LogWarning("LizardBoss não foi encontrado no LizardAnimationEvents.");
         }
     }
 }

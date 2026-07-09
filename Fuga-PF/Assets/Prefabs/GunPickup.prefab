@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 56193665507808997}
   - component: {fileID: 5279404822998607603}
   - component: {fileID: 3581529066151793176}
+  - component: {fileID: 8562073000683261950}
   m_Layer: 0
   m_Name: GunPickup
   m_TagString: Untagged
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77a01f10a9c7944fa60582e7702ddc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunPickup
+--- !u!114 &8562073000683261950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701266765379485039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580aa74de37796f4bb439fca23c86c2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupSound
+  pickupSound: {fileID: 8300000, guid: de7186d1c5355b84c9bc0206ee0927a2, type: 3}
+  volume: 1

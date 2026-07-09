@@ -1,28 +1,37 @@
 fileFormatVersion: 2
-guid: e3761a69c6edd2443b91b9c4636746da
+guid: 95018b05fac091848a7b19312fa3b393
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8153601815548456142
-    second: _atirando-removebg-preview_0
+      213: -94220848834001019
+    second: LizardWalk_8frames_288x288_transparent_0
   - first:
-      213: -4959626916693228973
-    second: _atirando-removebg-preview_1
+      213: 6196316151314045576
+    second: LizardWalk_8frames_288x288_transparent_1
   - first:
-      213: 3135391211618441417
-    second: _atirando-removebg-preview_2
+      213: 3311120383514506406
+    second: LizardWalk_8frames_288x288_transparent_2
   - first:
-      213: 962674207098497258
-    second: _atirando-removebg-preview_3
+      213: 1794642475397632955
+    second: LizardWalk_8frames_288x288_transparent_3
   - first:
-      213: 890170671781235983
-    second: _atirando-removebg-preview_4
+      213: 2514002915468230604
+    second: LizardWalk_8frames_288x288_transparent_4
   - first:
-      213: -6245789295887846157
-    second: _atirando-removebg-preview_5
+      213: 8005110314973271394
+    second: LizardWalk_8frames_288x288_transparent_5
   - first:
-      213: -1650265796649052763
-    second: _atirando-removebg-preview_6
+      213: 7719085540598331664
+    second: LizardWalk_8frames_288x288_transparent_6
+  - first:
+      213: 1858416375046211698
+    second: LizardWalk_8frames_288x288_transparent_7
+  - first:
+      213: 5491777437430271963
+    second: LizardWalk_8frames_288x288_transparent_8
+  - first:
+      213: 5590459441529855846
+    second: LizardWalk_8frames_288x288_transparent_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +64,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -93,7 +102,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,123 +127,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _atirando-removebg-preview_0
+      name: LizardWalk_8frames_288x288_transparent_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 90
-        width: 106
-        height: 116
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ecceebfc6a9672170800000000000000
-      internalID: 8153601815548456142
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _atirando-removebg-preview_1
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 90
-        width: 110
-        height: 128
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 352c804b89ddb2bb0800000000000000
-      internalID: -4959626916693228973
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _atirando-removebg-preview_2
-      rect:
-        serializedVersion: 2
-        x: 280
-        y: 89
-        width: 118
-        height: 117
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9c81668e1b5238b20800000000000000
-      internalID: 3135391211618441417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _atirando-removebg-preview_3
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 89
-        width: 145
-        height: 120
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ae86984471b1c5d00800000000000000
-      internalID: 962674207098497258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _atirando-removebg-preview_5
-      rect:
-        serializedVersion: 2
-        x: 607
-        y: 89
-        width: 96
-        height: 117
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3f4faac1abf7259a0800000000000000
-      internalID: -6245789295887846157
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _atirando-removebg-preview_6
-      rect:
-        serializedVersion: 2
-        x: 730
-        y: 90
+        x: 90
+        y: 15
         width: 107
-        height: 116
+        height: 112
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,8 +142,162 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a591cd50041919e0800000000000000
-      internalID: -1650265796649052763
+      spriteID: 58740de13a241bef0800000000000000
+      internalID: -94220848834001019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_1
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 15
+        width: 99
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ad61bc5bcbdf550800000000000000
+      internalID: 6196316151314045576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_2
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 15
+        width: 101
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a4ffeb127673fd20800000000000000
+      internalID: 3311120383514506406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_3
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 15
+        width: 96
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb357eca2d9d7e810800000000000000
+      internalID: 1794642475397632955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_4
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 15
+        width: 103
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccfb7c4f45883e220800000000000000
+      internalID: 2514002915468230604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_6
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 15
+        width: 103
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 019b736d663bf1b60800000000000000
+      internalID: 7719085540598331664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_7
+      rect:
+        serializedVersion: 2
+        x: 1817
+        y: 15
+        width: 99
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2780667c8db6ac910800000000000000
+      internalID: 1858416375046211698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardWalk_8frames_288x288_transparent_8
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 15
+        width: 95
+        height: 106
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdf498f8b76b63c40800000000000000
+      internalID: 5491777437430271963
       vertices: []
       indices: 
       edges: []
@@ -253,7 +306,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b2502f98b3da90a478fc9b698817f5de
+    spriteID: 7dba28c90c6f12940a0067dee8a07d84
     internalID: 0
     vertices: []
     indices: 
@@ -263,13 +316,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      _atirando-removebg-preview_0: 8153601815548456142
-      _atirando-removebg-preview_1: -4959626916693228973
-      _atirando-removebg-preview_2: 3135391211618441417
-      _atirando-removebg-preview_3: 962674207098497258
-      _atirando-removebg-preview_4: 890170671781235983
-      _atirando-removebg-preview_5: -6245789295887846157
-      _atirando-removebg-preview_6: -1650265796649052763
+      LizardWalk_8frames_288x288_transparent_0: -94220848834001019
+      LizardWalk_8frames_288x288_transparent_1: 6196316151314045576
+      LizardWalk_8frames_288x288_transparent_2: 3311120383514506406
+      LizardWalk_8frames_288x288_transparent_3: 1794642475397632955
+      LizardWalk_8frames_288x288_transparent_4: 2514002915468230604
+      LizardWalk_8frames_288x288_transparent_5: 8005110314973271394
+      LizardWalk_8frames_288x288_transparent_6: 7719085540598331664
+      LizardWalk_8frames_288x288_transparent_7: 1858416375046211698
+      LizardWalk_8frames_288x288_transparent_8: 5491777437430271963
+      LizardWalk_8frames_288x288_transparent_9: 5590459441529855846
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

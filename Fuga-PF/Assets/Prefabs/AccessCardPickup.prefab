@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3790494951277710567}
   - component: {fileID: 216012920841996648}
   - component: {fileID: 363758981538190959}
+  - component: {fileID: -7024487093754688546}
   m_Layer: 0
   m_Name: AccessCardPickup
   m_TagString: Untagged
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89deaceebd5002c47be9639153f8b1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccessCardPickup
+--- !u!114 &-7024487093754688546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749590942003137420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580aa74de37796f4bb439fca23c86c2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupSound
+  pickupSound: {fileID: 8300000, guid: de7186d1c5355b84c9bc0206ee0927a2, type: 3}
+  volume: 1

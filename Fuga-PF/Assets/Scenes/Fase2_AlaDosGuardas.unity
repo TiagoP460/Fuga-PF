@@ -2902,9 +2902,14 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 0
   healthBar: {fileID: 1087545674}
+  useDamageAnimation: 1
+  damageTriggerName: Damage
+  deathTriggerName: Die
   destroyOnDeath: 1
   dropItem: {fileID: 0}
   deathDelay: 0.8
+  freezeOnDeath: 1
+  disableColliderOnDeath: 1
   restartSceneOnDeath: 1
   restartDelay: 1
 --- !u!114 &1327900793
@@ -2950,6 +2955,8 @@ MonoBehaviour:
   firePoint: {fileID: 1590182228}
   bulletPrefab: {fileID: 4695008049276178596, guid: 8759e4348feb6414d8c2a4df3226a86e, type: 3}
   shootCooldown: 0.6
+  shootSound: {fileID: 8300000, guid: de0a422e6f1180b48bc8d85071fd5a1b, type: 3}
+  shootVolume: 0.4
 --- !u!95 &1327900795
 Animator:
   serializedVersion: 7
@@ -3242,9 +3249,14 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   healthBar: {fileID: 0}
+  useDamageAnimation: 1
+  damageTriggerName: Damage
+  deathTriggerName: Die
   destroyOnDeath: 1
   dropItem: {fileID: 8701266765379485039, guid: 2349555ee9206ca4a90ae4ec06ddad12, type: 3}
   deathDelay: 0.8
+  freezeOnDeath: 1
+  disableColliderOnDeath: 1
   restartSceneOnDeath: 0
   restartDelay: 1
 --- !u!1 &1409871422
@@ -3911,9 +3923,14 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   healthBar: {fileID: 0}
+  useDamageAnimation: 1
+  damageTriggerName: Damage
+  deathTriggerName: Die
   destroyOnDeath: 1
   dropItem: {fileID: 8701266765379485039, guid: 2349555ee9206ca4a90ae4ec06ddad12, type: 3}
   deathDelay: 0.8
+  freezeOnDeath: 1
+  disableColliderOnDeath: 1
   restartSceneOnDeath: 0
   restartDelay: 1
 --- !u!1 &1720190258

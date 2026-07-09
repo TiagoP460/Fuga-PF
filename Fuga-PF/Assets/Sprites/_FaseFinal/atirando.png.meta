@@ -1,31 +1,34 @@
 fileFormatVersion: 2
-guid: 3aab6e7aeaec7314bb8ac06f428d6eae
+guid: 7ac1caa8e2492f749b6da95f74555559
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7893436808578264555
-    second: _andando-removebg-preview_0
+      213: 5827159453557583575
+    second: LizardThrow_6frames_288x288_transparent_0
   - first:
-      213: 4088463897665691060
-    second: _andando-removebg-preview_1
+      213: 5288754525180487673
+    second: LizardThrow_6frames_288x288_transparent_1
   - first:
-      213: -853386187225658585
-    second: _andando-removebg-preview_2
+      213: 8088292601677108357
+    second: LizardThrow_6frames_288x288_transparent_2
   - first:
-      213: 1779658485177322164
-    second: _andando-removebg-preview_3
+      213: 2231986071659429683
+    second: LizardThrow_6frames_288x288_transparent_3
   - first:
-      213: 2167149586338264988
-    second: _andando-removebg-preview_4
+      213: 280955678133724514
+    second: LizardThrow_6frames_288x288_transparent_4
   - first:
-      213: -4251582848752604787
-    second: _andando-removebg-preview_5
+      213: 6654950530684901578
+    second: LizardThrow_6frames_288x288_transparent_5
   - first:
-      213: 4597573002723057306
-    second: _andando-removebg-preview_6
+      213: -8400625203485798177
+    second: LizardThrow_6frames_288x288_transparent_6
   - first:
-      213: 6702693891261719239
-    second: _andando-removebg-preview_7
+      213: 6674009934248506434
+    second: LizardThrow_6frames_288x288_transparent_7
+  - first:
+      213: -756659239338857659
+    second: LizardThrow_6frames_288x288_transparent_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +61,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 110
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,7 +99,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -121,101 +124,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _andando-removebg-preview_0
+      name: LizardThrow_6frames_288x288_transparent_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 86
-        width: 105
-        height: 109
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 51213b73b01e47290800000000000000
-      internalID: -7893436808578264555
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _andando-removebg-preview_1
-      rect:
-        serializedVersion: 2
-        x: 118
-        y: 85
-        width: 97
-        height: 107
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4bd5f59d0442db830800000000000000
-      internalID: 4088463897665691060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _andando-removebg-preview_2
-      rect:
-        serializedVersion: 2
-        x: 225
-        y: 85
-        width: 103
-        height: 109
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 72b803eb8c92824f0800000000000000
-      internalID: -853386187225658585
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _andando-removebg-preview_3
-      rect:
-        serializedVersion: 2
-        x: 337
-        y: 85
-        width: 97
-        height: 108
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4ba018696fd92b810800000000000000
-      internalID: 1779658485177322164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _andando-removebg-preview_4
-      rect:
-        serializedVersion: 2
-        x: 440
-        y: 86
+        x: 75
+        y: 15
         width: 107
-        height: 107
+        height: 119
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,20 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c97b3d41113431e10800000000000000
-      internalID: 2167149586338264988
+      spriteID: 7deebde36aa3ed050800000000000000
+      internalID: 5827159453557583575
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _andando-removebg-preview_5
+      name: LizardThrow_6frames_288x288_transparent_1
       rect:
         serializedVersion: 2
-        x: 546
-        y: 85
-        width: 98
-        height: 105
+        x: 358
+        y: 15
+        width: 107
+        height: 132
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8925f6cce75ff4c0800000000000000
-      internalID: -4251582848752604787
+      spriteID: 9f76f99383e656940800000000000000
+      internalID: 5288754525180487673
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _andando-removebg-preview_6
+      name: LizardThrow_6frames_288x288_transparent_2
       rect:
         serializedVersion: 2
-        x: 649
-        y: 86
-        width: 99
-        height: 105
+        x: 647
+        y: 15
+        width: 111
+        height: 120
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,20 +183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a9edb38794cddcf30800000000000000
-      internalID: 4597573002723057306
+      spriteID: 584526284436f3070800000000000000
+      internalID: 8088292601677108357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _andando-removebg-preview_7
+      name: LizardThrow_6frames_288x288_transparent_3
       rect:
         serializedVersion: 2
-        x: 755
-        y: 87
-        width: 95
-        height: 103
+        x: 937
+        y: 15
+        width: 142
+        height: 122
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,8 +205,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c2e5dae490c40d50800000000000000
-      internalID: 6702693891261719239
+      spriteID: 33f31e0b18b99fe10800000000000000
+      internalID: 2231986071659429683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardThrow_6frames_288x288_transparent_5
+      rect:
+        serializedVersion: 2
+        x: 1258
+        y: 15
+        width: 97
+        height: 119
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac8554b8f322b5c50800000000000000
+      internalID: 6654950530684901578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LizardThrow_6frames_288x288_transparent_6
+      rect:
+        serializedVersion: 2
+        x: 1529
+        y: 15
+        width: 109
+        height: 120
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd01907c2ebfa6b80800000000000000
+      internalID: -8400625203485798177
       vertices: []
       indices: 
       edges: []
@@ -300,7 +259,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9716a06706c583a499aeae8633423f2c
+    spriteID: 9f424e309437dc24d96b218f470787bc
     internalID: 0
     vertices: []
     indices: 
@@ -310,14 +269,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      _andando-removebg-preview_0: -7893436808578264555
-      _andando-removebg-preview_1: 4088463897665691060
-      _andando-removebg-preview_2: -853386187225658585
-      _andando-removebg-preview_3: 1779658485177322164
-      _andando-removebg-preview_4: 2167149586338264988
-      _andando-removebg-preview_5: -4251582848752604787
-      _andando-removebg-preview_6: 4597573002723057306
-      _andando-removebg-preview_7: 6702693891261719239
+      LizardThrow_6frames_288x288_transparent_0: 5827159453557583575
+      LizardThrow_6frames_288x288_transparent_1: 5288754525180487673
+      LizardThrow_6frames_288x288_transparent_2: 8088292601677108357
+      LizardThrow_6frames_288x288_transparent_3: 2231986071659429683
+      LizardThrow_6frames_288x288_transparent_4: 280955678133724514
+      LizardThrow_6frames_288x288_transparent_5: 6654950530684901578
+      LizardThrow_6frames_288x288_transparent_6: -8400625203485798177
+      LizardThrow_6frames_288x288_transparent_7: 6674009934248506434
+      LizardThrow_6frames_288x288_transparent_8: -756659239338857659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
