@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private bool facingRight = true;
 
     private float nextShootTime = 0f;
+    private bool isDead = false;
 
     void Start()
     {
@@ -41,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+            return;
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         CheckGround();
@@ -53,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
     }
 
@@ -72,12 +80,19 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+            if (anim != null)
+            {
+                anim.SetTrigger("Jump");
+            }
         }
     }
 
     void Attack()
     {
-        // Botão esquerdo do mouse
+        if (IsPointerOverUI())
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (anim != null)
@@ -85,7 +100,11 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("Knife");
             }
 
-            if (attackPoint == null) return;
+            if (attackPoint == null)
+            {
+                Debug.LogWarning("AttackPoint não foi configurado no Player.");
+                return;
+            }
 
             Collider2D[] hitObjects = Physics2D.OverlapCircleAll(
                 attackPoint.position,
@@ -100,13 +119,34 @@ public class PlayerMovement : MonoBehaviour
                 if (crate != null)
                 {
                     crate.TakeDamage(attackDamage);
+                    continue;
+                }
+
+                GuardHealth guardHealth = hit.GetComponent<GuardHealth>();
+
+                if (guardHealth == null)
+                {
+                    guardHealth = hit.GetComponentInParent<GuardHealth>();
+                }
+
+                if (guardHealth != null)
+                {
+                    guardHealth.TakeDamage(attackDamage);
+                    Debug.Log("Player acertou o guarda com ataque corpo a corpo.");
+                    continue;
                 }
 
                 Health health = hit.GetComponent<Health>();
 
+                if (health == null)
+                {
+                    health = hit.GetComponentInParent<Health>();
+                }
+
                 if (health != null && hit.CompareTag("Enemy"))
                 {
                     health.TakeDamage(attackDamage);
+                    Debug.Log("Player acertou inimigo com Health.");
                 }
             }
         }
@@ -114,7 +154,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Shoot()
     {
-        // Botão direito do mouse + cooldown
+        if (IsPointerOverUI())
+            return;
+
         if (Input.GetMouseButtonDown(1) && Time.time >= nextShootTime)
         {
             if (inventory == null || !inventory.hasGun)
@@ -156,6 +198,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
     void FlipCharacter()
     {
         if (moveInput > 0 && !facingRight)
@@ -185,15 +235,34 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsGrounded", isGrounded);
     }
 
+    public void SetDead()
+    {
+        isDead = true;
+        moveInput = 0f;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", 0f);
+            anim.SetTrigger("Die");
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
         {
+            Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
 
         if (attackPoint != null)
         {
+            Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         }
     }

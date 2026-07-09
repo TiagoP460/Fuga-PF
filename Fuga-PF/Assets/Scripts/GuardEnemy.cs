@@ -1,84 +1,100 @@
+using System.Collections;
 using UnityEngine;
 
 public class GuardEnemy : MonoBehaviour
 {
     [Header("Vida")]
-    public int health = 3;
+    public int maxHealth = 3;
+    public int currentHealth;
 
-    [Header("Movimento")]
-    public bool canPatrol = true;
-    public float speed = 2f;
-    public Transform pointA;
-    public Transform pointB;
+    [Header("Barra de vida")]
+    public HealthBar healthBar;
 
     [Header("Drop")]
     public GameObject itemDrop;
 
-    private Transform currentTarget;
+    [Header("Morte")]
+    public float deathDelay = 0.9f;
+
     private bool isDead = false;
+    private Animator anim;
+    private Collider2D col;
 
-    void Start()
+    private void Start()
     {
-        currentTarget = pointB;
-    }
+        anim = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
 
-    void Update()
-    {
-        if (isDead) return;
+        currentHealth = maxHealth;
 
-        if (canPatrol && pointA != null && pointB != null)
+        if (healthBar != null)
         {
-            Patrol();
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(currentHealth);
         }
-    }
-
-    void Patrol()
-    {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            currentTarget.position,
-            speed * Time.deltaTime
-        );
-
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f)
-        {
-            if (currentTarget == pointA)
-                currentTarget = pointB;
-            else
-                currentTarget = pointA;
-
-            Flip();
-        }
-    }
-
-    void Flip()
-    {
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
     }
 
     public void TakeDamage(int damage)
     {
         if (isDead) return;
 
-        health -= damage;
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        if (health <= 0)
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+
+        if (currentHealth <= 0)
         {
             Die();
         }
+        else
+        {
+            if (anim != null)
+            {
+                anim.ResetTrigger("Shoot");
+                anim.SetTrigger("Damage");
+            }
+        }
     }
 
-    void Die()
+    private void Die()
     {
+        if (isDead) return;
+
         isDead = true;
+
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", 0f);
+            anim.ResetTrigger("Shoot");
+            anim.ResetTrigger("Damage");
+            anim.SetTrigger("Death");
+        }
+
+        if (col != null)
+        {
+            col.enabled = false;
+        }
 
         if (itemDrop != null)
         {
             Instantiate(itemDrop, transform.position, Quaternion.identity);
         }
 
+        StartCoroutine(DeathRoutine());
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(deathDelay);
         Destroy(gameObject);
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 }

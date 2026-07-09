@@ -1820,6 +1820,9 @@ MonoBehaviour:
   healthBar: {fileID: 1810771161}
   destroyOnDeath: 0
   dropItem: {fileID: 0}
+  deathDelay: 0.8
+  restartSceneOnDeath: 0
+  restartDelay: 1
 --- !u!114 &1549061831
 MonoBehaviour:
   m_ObjectHideFlags: 0

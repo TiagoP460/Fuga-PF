@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -12,11 +14,19 @@ public class Health : MonoBehaviour
     [Header("Morte")]
     public bool destroyOnDeath = true;
     public GameObject dropItem;
+    public float deathDelay = 0.8f;
+
+    [Header("Reiniciar Cena ao Morrer")]
+    public bool restartSceneOnDeath = false;
+    public float restartDelay = 1.2f;
 
     private bool isDead = false;
+    private Animator anim;
 
-    void Start()
+    private void Start()
     {
+        anim = GetComponent<Animator>();
+
         currentHealth = maxHealth;
 
         if (healthBar != null)
@@ -24,6 +34,8 @@ public class Health : MonoBehaviour
             healthBar.SetMaxHealth(maxHealth);
             healthBar.SetHealth(currentHealth);
         }
+
+        Time.timeScale = 1f;
     }
 
     public void TakeDamage(int damage)
@@ -44,14 +56,62 @@ public class Health : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     {
+        if (isDead) return;
+
         isDead = true;
 
         if (dropItem != null)
         {
             Instantiate(dropItem, transform.position, Quaternion.identity);
         }
+
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+
+        if (playerMovement != null)
+        {
+            playerMovement.SetDead();
+        }
+        else if (anim != null)
+        {
+            anim.SetTrigger("Die");
+        }
+
+        FreezePlayer();
+
+        if (restartSceneOnDeath)
+        {
+            StartCoroutine(RestartSceneRoutine());
+            return;
+        }
+
+        StartCoroutine(DeathRoutine());
+    }
+
+    private void FreezePlayer()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.gravityScale = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        Collider2D col = GetComponent<Collider2D>();
+
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(deathDelay);
 
         if (destroyOnDeath)
         {
@@ -61,5 +121,15 @@ public class Health : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator RestartSceneRoutine()
+    {
+        yield return new WaitForSeconds(restartDelay);
+
+        Time.timeScale = 1f;
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }

@@ -1,39 +1,69 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class EscapePrisonPoint : MonoBehaviour
 {
     [Header("Boss")]
-    [SerializeField] private Health lizardBossHealth;
+    public GameObject lizardBossObject;
 
     [Header("Interação")]
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    public KeyCode interactKey = KeyCode.E;
 
     [Header("Mensagens")]
-    [SerializeField] private string blockedMessage = "Derrote o lagarto antes de escapar.";
-    [SerializeField] private string escapeMessage = "Aperte E para escapar da prisão.";
+    public string blockedMessage = "Derrote o lagarto antes de escapar.";
+    public string escapeMessage = "Aperte E para escapar da prisão.";
 
     [Header("Final da Fase")]
-    [SerializeField] private CanvasGroup finalFadeCanvasGroup;
-    [SerializeField] private GameObject finalFadePanel;
-    [SerializeField] private TextMeshProUGUI finalText;
-    [SerializeField] private float fadeDuration = 3f;
+    public GameObject finalFadePanel;
+    public GameObject finalTextObject;
+    public GameObject finalMenuButton;
+    public float fadeDuration = 3f;
+
+    [Header("Menu")]
+    public string mainMenuSceneName = "MenuInicial";
 
     [Header("Player")]
-    [SerializeField] private Behaviour playerMovementScript;
+    public GameObject playerObject;
+
+    private Health lizardBossHealth;
+    private CanvasGroup finalFadeCanvasGroup;
+    private TextMeshProUGUI finalText;
+    private Behaviour playerMovementScript;
+    private Rigidbody2D playerRb;
+    private Collider2D playerCollider;
 
     private bool playerNear = false;
     private bool endingStarted = false;
 
-    private Rigidbody2D playerRb;
-    private Collider2D playerCollider;
-
     private void Start()
     {
+        if (lizardBossObject != null)
+        {
+            lizardBossHealth = lizardBossObject.GetComponent<Health>();
+        }
+
         if (finalFadePanel != null)
         {
+            finalFadeCanvasGroup = finalFadePanel.GetComponent<CanvasGroup>();
             finalFadePanel.SetActive(true);
+        }
+
+        if (finalTextObject != null)
+        {
+            finalText = finalTextObject.GetComponent<TextMeshProUGUI>();
+            finalTextObject.SetActive(false);
+
+            if (finalText != null)
+            {
+                finalText.text = "Você conseguiu escapar da prisão!";
+            }
+        }
+
+        if (finalMenuButton != null)
+        {
+            finalMenuButton.SetActive(false);
         }
 
         if (finalFadeCanvasGroup != null)
@@ -43,10 +73,11 @@ public class EscapePrisonPoint : MonoBehaviour
             finalFadeCanvasGroup.blocksRaycasts = false;
         }
 
-        if (finalText != null)
+        if (playerObject != null)
         {
-            finalText.gameObject.SetActive(false);
-            finalText.text = "Você conseguiu escapar da prisão!";
+            playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+            playerRb = playerObject.GetComponent<Rigidbody2D>();
+            playerCollider = playerObject.GetComponent<Collider2D>();
         }
 
         Time.timeScale = 1f;
@@ -80,8 +111,13 @@ public class EscapePrisonPoint : MonoBehaviour
 
         playerNear = true;
 
-        playerRb = collision.GetComponent<Rigidbody2D>();
-        playerCollider = collision;
+        if (playerObject == null)
+        {
+            playerObject = collision.gameObject;
+            playerMovementScript = playerObject.GetComponent<PlayerMovement>();
+            playerRb = playerObject.GetComponent<Rigidbody2D>();
+            playerCollider = playerObject.GetComponent<Collider2D>();
+        }
 
         if (endingStarted)
             return;
@@ -111,6 +147,12 @@ public class EscapePrisonPoint : MonoBehaviour
 
     private bool IsBossDead()
     {
+        if (lizardBossObject == null)
+            return true;
+
+        if (lizardBossHealth == null)
+            lizardBossHealth = lizardBossObject.GetComponent<Health>();
+
         if (lizardBossHealth == null)
             return true;
 
@@ -162,10 +204,19 @@ public class EscapePrisonPoint : MonoBehaviour
             finalFadeCanvasGroup.alpha = 1f;
         }
 
+        if (finalTextObject != null)
+        {
+            finalTextObject.SetActive(true);
+        }
+
         if (finalText != null)
         {
-            finalText.gameObject.SetActive(true);
             finalText.text = "Você conseguiu escapar da prisão!";
+        }
+
+        if (finalMenuButton != null)
+        {
+            finalMenuButton.SetActive(true);
         }
     }
 
@@ -188,6 +239,12 @@ public class EscapePrisonPoint : MonoBehaviour
         {
             playerCollider.enabled = false;
         }
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     private void ShowMessage(string message)

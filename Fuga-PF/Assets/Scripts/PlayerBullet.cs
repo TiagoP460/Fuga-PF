@@ -8,12 +8,12 @@ public class PlayerBullet : MonoBehaviour
 
     private int direction = 1;
 
-    void Start()
+    private void Start()
     {
         Destroy(gameObject, lifeTime);
     }
 
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector2.right * direction * speed * Time.deltaTime);
     }
@@ -29,11 +29,39 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player"))
+            return;
+
+        GuardHealth guardHealth = collision.GetComponent<GuardHealth>();
+
+        if (guardHealth == null)
+        {
+            guardHealth = collision.GetComponentInParent<GuardHealth>();
+        }
+
+        if (guardHealth != null)
+        {
+            guardHealth.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
         Health health = collision.GetComponent<Health>();
+
+        if (health == null)
+        {
+            health = collision.GetComponentInParent<Health>();
+        }
 
         if (health != null && collision.CompareTag("Enemy"))
         {
             health.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (!collision.isTrigger)
+        {
             Destroy(gameObject);
         }
     }

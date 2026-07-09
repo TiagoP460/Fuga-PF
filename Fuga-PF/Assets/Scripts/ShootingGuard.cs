@@ -17,23 +17,46 @@ public class ShootingGuard : MonoBehaviour
     public Transform pointA;
     public Transform pointB;
 
+    [Header("Direção inicial")]
+    [SerializeField] private bool facingRight = true;
+
     private Transform currentTarget;
     private float nextShootTime;
-    private bool facingRight = false;
 
-    void Start()
+    private Animator anim;
+    private GuardEnemy guardEnemy;
+    private float startY;
+
+    private void Start()
     {
         currentTarget = pointB;
+        anim = GetComponent<Animator>();
+        guardEnemy = GetComponent<GuardEnemy>();
+
+        startY = transform.position.y;
+
+        ApplyFacingDirection();
     }
 
-    void Update()
+    private void Update()
     {
-        if (player == null) return;
+        if (guardEnemy != null && guardEnemy.IsDead())
+        {
+            SetSpeed(0f);
+            return;
+        }
+
+        if (player == null)
+        {
+            SetSpeed(0f);
+            return;
+        }
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= shootRange)
         {
+            SetSpeed(0f);
             FacePlayer();
             TryShoot();
         }
@@ -41,35 +64,62 @@ public class ShootingGuard : MonoBehaviour
         {
             Patrol();
         }
+        else
+        {
+            SetSpeed(0f);
+        }
     }
 
-    void Patrol()
+    private void Patrol()
     {
+        Vector2 oldPosition = transform.position;
+
+        Vector2 targetPosition = new Vector2(
+            currentTarget.position.x,
+            startY
+        );
+
         transform.position = Vector2.MoveTowards(
             transform.position,
-            currentTarget.position,
+            targetPosition,
             speed * Time.deltaTime
         );
 
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f)
+        transform.position = new Vector3(
+            transform.position.x,
+            startY,
+            transform.position.z
+        );
+
+        float moved = Vector2.Distance(oldPosition, transform.position);
+        SetSpeed(moved > 0.001f ? speed : 0f);
+
+        if (Mathf.Abs(transform.position.x - currentTarget.position.x) < 0.1f)
         {
             currentTarget = currentTarget == pointA ? pointB : pointA;
             Flip();
         }
     }
 
-    void TryShoot()
+    private void TryShoot()
     {
-        if (Time.time >= nextShootTime)
+        if (Time.time < nextShootTime)
+            return;
+
+        nextShootTime = Time.time + shootCooldown;
+
+        if (anim != null)
         {
-            Shoot();
-            nextShootTime = Time.time + shootCooldown;
+            anim.SetTrigger("Shoot");
         }
+
+        Shoot();
     }
 
-    void Shoot()
+    private void Shoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (bulletPrefab == null || firePoint == null)
+            return;
 
         GameObject bullet = Instantiate(
             bulletPrefab,
@@ -81,12 +131,12 @@ public class ShootingGuard : MonoBehaviour
 
         if (enemyBullet != null)
         {
-            int direction = player.position.x > transform.position.x ? 1 : -1;
+            int direction = facingRight ? 1 : -1;
             enemyBullet.SetDirection(direction);
         }
     }
 
-    void FacePlayer()
+    private void FacePlayer()
     {
         if (player.position.x > transform.position.x && !facingRight)
         {
@@ -98,12 +148,33 @@ public class ShootingGuard : MonoBehaviour
         }
     }
 
-    void Flip()
+    private void Flip()
     {
         facingRight = !facingRight;
+        ApplyFacingDirection();
+    }
 
+    private void ApplyFacingDirection()
+    {
         Vector3 scale = transform.localScale;
-        scale.x *= -1;
+
+        if (facingRight)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        else
+        {
+            scale.x = -Mathf.Abs(scale.x);
+        }
+
         transform.localScale = scale;
+    }
+
+    private void SetSpeed(float value)
+    {
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(value));
+        }
     }
 }

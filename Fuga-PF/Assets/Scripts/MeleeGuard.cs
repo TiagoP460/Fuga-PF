@@ -14,14 +14,36 @@ public class MeleeGuard : MonoBehaviour
     public float chaseRange = 5f;
     public float speed = 2.5f;
 
-    private float nextAttackTime;
-    private bool facingRight = false;
+    [Header("Direção inicial")]
+    [SerializeField] private bool facingRight = false;
 
-    void Update()
+    private float nextAttackTime;
+
+    private Animator anim;
+    private GuardEnemy guardEnemy;
+    private float startY;
+
+    private void Start()
     {
+        anim = GetComponent<Animator>();
+        guardEnemy = GetComponent<GuardEnemy>();
+
+        startY = transform.position.y;
+
+        ApplyFacingDirection();
+    }
+
+    private void Update()
+    {
+        if (guardEnemy != null && guardEnemy.IsDead())
+        {
+            SetSpeed(0f);
+            return;
+        }
+
         if (player == null)
         {
-            Debug.LogWarning("Player não foi colocado no MeleeGuard.");
+            SetSpeed(0f);
             return;
         }
 
@@ -29,6 +51,7 @@ public class MeleeGuard : MonoBehaviour
 
         if (distanceToPlayer <= attackRange)
         {
+            SetSpeed(0f);
             FacePlayer();
             Attack();
         }
@@ -37,40 +60,58 @@ public class MeleeGuard : MonoBehaviour
             FacePlayer();
             ChasePlayer();
         }
+        else
+        {
+            SetSpeed(0f);
+        }
     }
 
-    void ChasePlayer()
+    private void ChasePlayer()
     {
-        Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
+        Vector2 oldPosition = transform.position;
+
+        Vector2 targetPosition = new Vector2(
+            player.position.x,
+            startY
+        );
 
         transform.position = Vector2.MoveTowards(
             transform.position,
             targetPosition,
             speed * Time.deltaTime
         );
+
+        transform.position = new Vector3(
+            transform.position.x,
+            startY,
+            transform.position.z
+        );
+
+        float moved = Vector2.Distance(oldPosition, transform.position);
+        SetSpeed(moved > 0.001f ? speed : 0f);
     }
 
-    void Attack()
+    private void Attack()
     {
-        if (Time.time >= nextAttackTime)
+        if (Time.time < nextAttackTime)
+            return;
+
+        nextAttackTime = Time.time + attackCooldown;
+
+        if (anim != null)
         {
-            Health playerHealth = player.GetComponent<Health>();
+            anim.SetTrigger("Shoot");
+        }
 
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-                Debug.Log("Guarda bateu no Player!");
-            }
-            else
-            {
-                Debug.LogWarning("O Player não tem o script Health.");
-            }
+        Health playerHealth = player.GetComponent<Health>();
 
-            nextAttackTime = Time.time + attackCooldown;
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damage);
         }
     }
 
-    void FacePlayer()
+    private void FacePlayer()
     {
         if (player.position.x > transform.position.x && !facingRight)
         {
@@ -82,12 +123,33 @@ public class MeleeGuard : MonoBehaviour
         }
     }
 
-    void Flip()
+    private void Flip()
     {
         facingRight = !facingRight;
+        ApplyFacingDirection();
+    }
 
+    private void ApplyFacingDirection()
+    {
         Vector3 scale = transform.localScale;
-        scale.x *= -1;
+
+        if (facingRight)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        else
+        {
+            scale.x = -Mathf.Abs(scale.x);
+        }
+
         transform.localScale = scale;
+    }
+
+    private void SetSpeed(float value)
+    {
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(value));
+        }
     }
 }
