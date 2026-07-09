@@ -897,7 +897,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4695008049276178596, guid: 8759e4348feb6414d8c2a4df3226a86e, type: 3}
   shootCooldown: 0.6
   shootSound: {fileID: 8300000, guid: de0a422e6f1180b48bc8d85071fd5a1b, type: 3}
-  shootVolume: 0.4
+  shootVolume: 0.7
+  knifeSound: {fileID: 8300000, guid: 797c1066bdd185e4ebf8f9ee2b5f956c, type: 3}
+  knifeVolume: 1
 --- !u!95 &174647975
 Animator:
   serializedVersion: 7

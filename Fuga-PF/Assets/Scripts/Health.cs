@@ -148,10 +148,11 @@ public class Health : MonoBehaviour
     {
         LizardBoss lizardBoss = GetComponent<LizardBoss>();
 
-        if (lizardBoss != null)
-        {
-            lizardBoss.enabled = false;
-        }
+       if (lizardBoss != null)
+{
+    lizardBoss.SetDead();
+    lizardBoss.enabled = false;
+}
     }
 
     private void FreezeObject()

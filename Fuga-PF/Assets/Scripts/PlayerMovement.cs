@@ -23,9 +23,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bulletPrefab;
     public float shootCooldown = 0.6f;
 
-    [Header("Som")]
+    [Header("Sons")]
     public AudioClip shootSound;
     [Range(0f, 1f)] public float shootVolume = 1f;
+
+    public AudioClip knifeSound;
+    [Range(0f, 1f)] public float knifeVolume = 1f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -52,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f;
     }
 
     void Update()
@@ -112,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetTrigger("Knife");
             }
+
+            PlayKnifeSound();
 
             if (attackPoint == null)
             {
@@ -218,6 +225,14 @@ public class PlayerMovement : MonoBehaviour
         if (audioSource != null && shootSound != null)
         {
             audioSource.PlayOneShot(shootSound, shootVolume);
+        }
+    }
+
+    void PlayKnifeSound()
+    {
+        if (audioSource != null && knifeSound != null)
+        {
+            audioSource.PlayOneShot(knifeSound, knifeVolume);
         }
     }
 

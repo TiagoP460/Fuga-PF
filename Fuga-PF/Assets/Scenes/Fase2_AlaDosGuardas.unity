@@ -1238,6 +1238,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6420425915541682957, guid: d0b2bd8cfe71d0d4eb60af4555adddd1, type: 3}
   shootRange: 8
   shootCooldown: 1.5
+  shootSound: {fileID: 8300000, guid: 2bd336eeeb604104fa519c9f85eac50b, type: 3}
+  shootVolume: 0.5
   facingRight: 1
 --- !u!114 &337492868
 MonoBehaviour:
@@ -1720,6 +1722,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5235207d70b6f4e46aac423ab8a8c66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccessCardDoor
+  opened: 0
+  openDoorSound: {fileID: 8300000, guid: db20b20de44e5664ea9484dc127e3940, type: 3}
+  openDoorVolume: 1
 --- !u!1 &698376016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2615,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6420425915541682957, guid: d0b2bd8cfe71d0d4eb60af4555adddd1, type: 3}
   shootRange: 8
   shootCooldown: 1.5
+  shootSound: {fileID: 8300000, guid: 2bd336eeeb604104fa519c9f85eac50b, type: 3}
+  shootVolume: 0.5
   facingRight: 1
 --- !u!114 &1117571188
 MonoBehaviour:
@@ -2956,7 +2963,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4695008049276178596, guid: 8759e4348feb6414d8c2a4df3226a86e, type: 3}
   shootCooldown: 0.6
   shootSound: {fileID: 8300000, guid: de0a422e6f1180b48bc8d85071fd5a1b, type: 3}
-  shootVolume: 0.4
+  shootVolume: 0.7
+  knifeSound: {fileID: 8300000, guid: 797c1066bdd185e4ebf8f9ee2b5f956c, type: 3}
+  knifeVolume: 1
 --- !u!95 &1327900795
 Animator:
   serializedVersion: 7

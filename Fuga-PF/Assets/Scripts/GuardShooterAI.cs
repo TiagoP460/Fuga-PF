@@ -17,12 +17,20 @@ public class GuardShooterAI : MonoBehaviour
     public float shootRange = 8f;
     public float shootCooldown = 1.5f;
 
+    [Header("Som do tiro")]
+    public AudioClip shootSound;
+
+    [Range(0f, 1f)]
+    public float shootVolume = 1f;
+
     [Header("Direção inicial")]
     public bool facingRight = true;
 
     private Transform currentTarget;
     private Animator animator;
     private GuardHealth guardHealth;
+    private AudioSource audioSource;
+
     private float nextShootTime;
     private float fixedY;
 
@@ -30,6 +38,16 @@ public class GuardShooterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         guardHealth = GetComponent<GuardHealth>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f;
     }
 
     private void Start()
@@ -131,6 +149,8 @@ public class GuardShooterAI : MonoBehaviour
         if (bulletPrefab == null || firePoint == null)
             return;
 
+        PlayShootSound();
+
         GameObject bullet = Instantiate(
             bulletPrefab,
             firePoint.position,
@@ -143,6 +163,14 @@ public class GuardShooterAI : MonoBehaviour
         {
             int direction = facingRight ? 1 : -1;
             guardBullet.SetDirection(direction);
+        }
+    }
+
+    private void PlayShootSound()
+    {
+        if (audioSource != null && shootSound != null)
+        {
+            audioSource.PlayOneShot(shootSound, shootVolume);
         }
     }
 

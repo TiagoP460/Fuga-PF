@@ -1001,6 +1001,8 @@ MonoBehaviour:
   rockPrefab: {fileID: 8523218307913010127, guid: edcb7e2df5b87254faf6605b3e786a1a, type: 3}
   throwPoint: {fileID: 1118069960}
   attackCooldown: 1.2
+  throwRockSound: {fileID: 8300000, guid: bc05229d6414b9145ba09f4edbd555cf, type: 3}
+  throwRockVolume: 1
   animator: {fileID: 451081944}
 --- !u!50 &451081943
 Rigidbody2D:
@@ -2610,7 +2612,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4695008049276178596, guid: 8759e4348feb6414d8c2a4df3226a86e, type: 3}
   shootCooldown: 0.9
   shootSound: {fileID: 8300000, guid: de0a422e6f1180b48bc8d85071fd5a1b, type: 3}
-  shootVolume: 0.4
+  shootVolume: 0.5
+  knifeSound: {fileID: 8300000, guid: 797c1066bdd185e4ebf8f9ee2b5f956c, type: 3}
+  knifeVolume: 1
 --- !u!95 &1671708988
 Animator:
   serializedVersion: 7
